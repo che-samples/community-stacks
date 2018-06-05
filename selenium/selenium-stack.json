@@ -1,0 +1,63 @@
+{
+    "id": "selenium",
+    "creator": "ide",
+    "name": "Selenium",
+    "description": "Stack with Selenium and Chrome on Ubuntu.",
+    "scope": "advanced",
+    "tags": [
+      "Selenium",
+      "Ubuntu",
+      "Chrome",
+      "noVNC",
+      "xserver",
+      "blackbox",
+      "webdriver",
+      "x11vnc"
+    ],
+    "components": [],
+    "workspaceConfig": {
+      "environments": {
+        "default": {
+          "machines": {
+            "dev-machine": {
+              "installers": [
+                "org.eclipse.che.exec", "org.eclipse.che.terminal", "org.eclipse.che.ws-agent"
+              ],
+              "servers": {
+                "8080/tcp" : {
+                  "port" : "8080",
+                  "protocol" : "http"
+                },
+                "8000/tcp" : {
+                  "port" : "8000",
+                  "protocol" : "http"
+                },
+                "4444/tcp" : {
+                  "port" : "4444",
+                  "protocol" : "tcp"
+                },
+                "6080/tcp" : {
+                  "port" : "6080",
+                  "protocol" : "tcp"
+                },
+                "32745/tcp" : {
+                  "port" : "32745",
+                  "protocol" : "tcp"
+                }
+              },
+              "attributes" : {
+                "memoryLimitBytes": "2147483648"
+              }
+            }
+          },
+          "recipe": {
+            "content": "eclipse/selenium",
+            "type": "dockerimage"
+          }
+        }
+      },
+      "name": "default",
+      "defaultEnv": "default",
+      "description": null
+    }
+  }

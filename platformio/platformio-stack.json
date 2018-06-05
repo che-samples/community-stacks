@@ -1,0 +1,100 @@
+{
+    "id": "platformio",
+    "creator": "ide",
+    "name": "PlatformIO",
+    "description": "Stack for IoT development",
+    "scope": "general",
+    "tags": [
+      "PlatformIO",
+      "IoT",
+      "embedded",
+      "arduino",
+      "mbed"
+    ],
+    "components": [],
+    "workspaceConfig": {
+      "environments": {
+        "default": {
+          "machines": {
+            "dev-machine": {
+              "installers": [
+                "org.eclipse.che.exec", "org.eclipse.che.terminal", "org.eclipse.che.ws-agent"
+              ],
+              "servers": {
+                "8080/tcp" : {
+                  "port" : "8080",
+                  "protocol" : "http"
+                },
+                "8000/tcp" : {
+                  "port" : "8000",
+                  "protocol" : "http"
+                }
+              },
+              "attributes" : {
+                "memoryLimitBytes": "2147483648"
+
+              }
+            }
+          },
+          "recipe": {
+            "content": "eclipse/platformio:latest",
+            "type": "dockerimage"
+          }
+        }
+      },
+      "name": "default",
+      "defaultEnv": "default",
+      "description": null,
+      "commands": [
+        {
+          "name": "run",
+          "type": "custom",
+          "commandLine": "pio run -d ${current.project.path}",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Run"
+          }
+        },
+        {
+          "name": "upload",
+          "type": "custom",
+          "commandLine": "pio run -d ${current.project.path} -t upload",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Run"
+          }
+        },
+        {
+          "name": "clean",
+          "type": "custom",
+          "commandLine": "pio run -d ${current.project.path} -t clean",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Build"
+          }
+        },
+        {
+          "name": "Remote: Device list",
+          "type": "custom",
+          "commandLine": "pio remote device list",
+          "attributes": {
+            "previewUrl": "",
+            "goal": ""
+          }
+        },
+        {
+          "name": "Remote: Upload",
+          "type": "custom",
+          "commandLine": "pio remote run -d ${current.project.path} -t upload",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Run"
+          }
+        }
+      ]
+    },
+    "stackIcon": {
+      "name": "type-python.svg",
+      "mediaType": "image/svg+xml"
+    }
+  }

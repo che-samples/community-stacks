@@ -1,0 +1,35 @@
+{
+    "id": "debian",
+    "creator": "ide",
+    "name": "Debian",
+    "description": "Simple stack with Debian (Jessie).",
+    "scope": "advanced",
+    "tags": [
+      "Debian"
+    ],
+    "components": [],
+    "workspaceConfig": {
+      "environments": {
+        "default": {
+          "machines": {
+            "dev-machine": {
+              "installers": [
+                "org.eclipse.che.exec", "org.eclipse.che.terminal", "org.eclipse.che.ws-agent"
+              ],
+              "servers": {},
+              "attributes" : {
+                "memoryLimitBytes": "2147483648"
+              }
+            }
+          },
+          "recipe": {
+            "content": "eclipse/debian_jdk8",
+            "type": "dockerimage"
+          }
+        }
+      },
+      "name": "default",
+      "defaultEnv": "default",
+      "description": null
+    }
+  }

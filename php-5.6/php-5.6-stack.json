@@ -1,0 +1,105 @@
+{
+    "id": "php5.6-default",
+    "creator": "ide",
+    "name": "PHP-5.6",
+    "description": "Default PHP Stack with PHP 5.6, most popular extensions.",
+    "scope": "advanced",
+    "tags": [
+      "Ubuntu",
+      "Git",
+      "PHP",
+      "mysql",
+      "sqlite",
+      "Apache",
+      "dockerimager"
+    ],
+    "components": [],
+    "workspaceConfig": {
+      "environments": {
+        "default": {
+          "machines": {
+            "dev-machine": {
+              "installers": [
+                "org.eclipse.che.exec", "org.eclipse.che.terminal", "org.eclipse.che.ws-agent", "org.eclipse.che.ls.php"
+              ],
+              "servers": {
+                "8080/tcp" : {
+                  "port" : "8080",
+                  "protocol" : "http"
+                },
+                "8000/tcp" : {
+                  "port" : "8000",
+                  "protocol" : "http"
+                },
+                "80/tcp": {
+                  "port": "80",
+                  "protocol": "http"
+                }
+              },
+              "attributes" : {
+                "memoryLimitBytes": "2147483648"
+              }
+            }
+          },
+          "recipe": {
+            "content": "eclipse/php:5.6",
+            "type": "dockerimage"
+          }
+        }
+      },
+      "name": "default",
+      "defaultEnv": "default",
+      "description": null,
+      "commands": [
+        {
+          "name": "run php script",
+          "type": "custom",
+          "commandLine": "[ -z ${editor.current.file.path} ] && echo \"Open a PHP file in the editor before executing this command.\" || php ${editor.current.file.path}",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Run"
+          }
+        },
+        {
+          "name": "debug php script",
+          "type": "custom",
+          "commandLine": "[ -z ${editor.current.file.path} ] && echo \"Open a PHP file in the editor before executing this command.\" || QUERY_STRING=\"start_debug=1&debug_host=localhost&debug_port=10137\" php ${editor.current.file.path}",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Debug"
+          }
+        },
+        {
+          "name": "start apache",
+          "type": "custom",
+          "commandLine": "service apache2 start && tail -f /var/log/apache2/access.log -f /var/log/apache2/error.log",
+          "attributes": {
+            "previewUrl": "${server.80/tcp}/${current.project.relpath}",
+            "goal": "Run"
+          }
+        },
+        {
+          "name": "stop apache",
+          "type": "custom",
+          "commandLine": "service apache2 stop",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Run"
+          }
+        },
+        {
+          "name": "restart apache",
+          "type": "custom",
+          "commandLine": "service apache2 restart",
+          "attributes": {
+            "previewUrl": "${server.80/tcp}/${current.project.relpath}",
+            "goal": "Run"
+          }
+        }
+      ]
+    },
+    "stackIcon": {
+      "name": "type-php.svg",
+      "mediaType": "image/svg+xml"
+    }
+  }

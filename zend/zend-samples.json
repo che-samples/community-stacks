@@ -1,0 +1,126 @@
+[
+  {
+    "name": "astro-splash",
+    "displayName": "astro-splash",
+    "path": "/astro-splash",
+    "description": "An app that uses the Astronomy Picture of the Day API provided by NASA and the Zend Expressive framework.",
+    "projectType": "composer",
+    "mixins": [],
+    "attributes": {
+      "language": [
+        "php"
+      ]
+    },
+    "modules": [],
+    "problems": [],
+    "source": {
+      "type": "git",
+      "location": "https://github.com/kaloyan-raev/astrosplash.git",
+      "parameters": {}
+    },
+    "commands": [
+      {
+        "name": "configure",
+        "type": "custom",
+        "commandLine": "chmod 777 ${current.project.path}/data; echo \"<VirtualHost *:80>\n    DocumentRoot ${current.project.path}/public\n    SetEnv APPLICATION_ENV 'development'\n    <Directory ${current.project.path}/public>\n        DirectoryIndex index.php\n        AllowOverride All\n        Require all granted\n    </Directory>\n</VirtualHost>\" | sudo tee /etc/apache2/sites-available/000-default.conf; cp /usr/local/zend/etc/php.ini /tmp/update-php.ini \ngrep -q 'extension=pcntl.so' /tmp/update-php.ini || echo \"\nextension=pcntl.so\" | sudo tee -a /tmp/update-php.ini \nphp -c /tmp/update-php.ini ${current.project.path}/bin/update.php \nrm /tmp/update-php.ini",
+        "attributes": {
+          "previewUrl": "",
+          "goal": "Common"
+        }
+      },
+      {
+        "name": "update images",
+        "type": "custom",
+        "commandLine": "cp /usr/local/zend/etc/php.ini /tmp/update-php.ini \ngrep -q 'extension=pcntl.so' /tmp/update-php.ini || echo \"\nextension=pcntl.so\" | sudo tee -a /tmp/update-php.ini \nphp -c /tmp/update-php.ini ${current.project.path}/bin/update.php \nrm /tmp/update-php.ini",
+        "attributes": {
+          "previewUrl": "",
+          "goal": "Common"
+        }
+      },
+      {
+        "name": "clean doctrine cache",
+        "type": "custom",
+        "commandLine": "sudo rm -rf ${current.project.path}/data/doctrine-cache",
+        "attributes": {
+          "previewUrl": "",
+          "goal": "Common"
+        }
+      }
+    ],
+    "links": [],
+    "category": "Samples",
+    "tags": [
+      "Zend"
+    ]
+  },
+  {
+    "name": "zend-expressive",
+    "displayName": "zend-expressive",
+    "path": "/zend-expressive",
+    "description": "A skeleton application using the Zend Exressive framework. Expressive is a minimalist PSR-7 middleware framework for PHP with routing, DI container, optional templating, and optional error handling capabilities.",
+    "projectType": "composer",
+    "mixins": [],
+    "attributes": {
+      "language": [
+        "php"
+      ],
+      "package": [
+        "zendframework/zend-expressive-skeleton"
+      ]
+    },
+    "modules": [],
+    "problems": [],
+    "source": {},
+    "commands": [
+      {
+        "name": "configure",
+        "type": "custom",
+        "commandLine": "chmod 777 ${current.project.path}/data/cache; echo \"<VirtualHost *:80>\n    DocumentRoot ${current.project.path}/public\n    SetEnv APPLICATION_ENV 'development'\n    <Directory ${current.project.path}/public>\n        DirectoryIndex index.php\n        AllowOverride All\n        Require all granted\n    </Directory>\n</VirtualHost>\" | sudo tee /etc/apache2/sites-available/000-default.conf",
+        "attributes": {
+          "previewUrl": "",
+          "goal": "Common"
+        }
+      }
+    ],
+    "links": [],
+    "category": "Samples",
+    "tags": [
+      "Zend"
+    ]
+  },
+  {
+    "name": "zend-framework",
+    "displayName": "zend-framework",
+    "path": "/zend-framework",
+    "description": "A skeleton application using the Zend Framework MVC layer and module systems. It is meant to be used as a starting place for those looking to get their feet wet with Zend Framework.",
+    "projectType": "composer",
+    "mixins": [],
+    "attributes": {
+      "language": [
+        "php"
+      ],
+      "package": [
+        "zendframework/skeleton-application"
+      ]
+    },
+    "modules": [],
+    "problems": [],
+    "source": {},
+    "commands": [
+      {
+        "name": "configure",
+        "type": "custom",
+        "commandLine": "chmod 777 ${current.project.path}/data/cache; echo \"<VirtualHost *:80>\n    DocumentRoot ${current.project.path}/public\n    SetEnv APPLICATION_ENV 'development'\n    <Directory ${current.project.path}/public>\n        DirectoryIndex index.php\n        AllowOverride All\n        Require all granted\n    </Directory>\n</VirtualHost>\" | sudo tee /etc/apache2/sites-available/000-default.conf",
+        "attributes": {
+          "previewUrl": "",
+          "goal": "Common"
+        }
+      }
+    ],
+    "links": [],
+    "category": "Samples",
+    "tags": [
+      "Zend"
+    ]
+  }
+]

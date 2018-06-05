@@ -1,0 +1,108 @@
+{
+    "id": "zend",
+    "creator": "ide",
+    "name": "Zend",
+    "description": "Zend stack with PHP 7, Zend Server 9 and Z-Ray.",
+    "scope": "advanced",
+    "tags": [
+      "PHP",
+      "Zend",
+      "Z-Ray",
+      "Composer",
+      "Ubuntu",
+      "Git"
+    ],
+    "components": [],
+    "workspaceConfig": {
+      "environments": {
+        "default": {
+          "machines": {
+            "dev-machine": {
+              "installers": [
+                "org.eclipse.che.exec", "org.eclipse.che.terminal", "org.eclipse.che.ws-agent", "org.eclipse.che.ls.php", "org.eclipse.che.ls.json"
+              ],
+              "servers": {
+                "80/tcp" : {
+                  "port" : "80",
+                  "protocol" : "http"
+                },
+                "443/tcp" : {
+                  "port" : "443",
+                  "protocol" : "http"
+                },
+                "10081/tcp" : {
+                  "port" : "10081",
+                  "protocol" : "tcp"
+                },
+                "10082/tcp" : {
+                  "port" : "10082",
+                  "protocol" : "tcp"
+                }
+              },
+              "attributes" : {
+                "memoryLimitBytes": "2147483648"
+              }
+            }
+          },
+          "recipe": {
+            "content": "kaloyanraev/che-zendserver",
+            "type": "dockerimage"
+          }
+        }
+      },
+      "name": "default",
+      "defaultEnv": "default",
+      "description": null,
+      "commands": [
+        {
+          "name": "run php script",
+          "type": "custom",
+          "commandLine": "[ -z ${editor.current.file.path} ] && echo \"Open a PHP file in the editor before executing this command.\" || php ${editor.current.file.path}",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Run"
+          }
+        },
+        {
+          "name": "debug php script",
+          "type": "custom",
+          "commandLine": "[ -z ${editor.current.file.path} ] && echo \"Open a PHP file in the editor before executing this command.\" || QUERY_STRING=\"start_debug=1&debug_host=localhost&debug_port=10137\" php ${editor.current.file.path}",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Debug"
+          }
+        },
+        {
+          "name": "restart zend server",
+          "type": "custom",
+          "commandLine": "sudo sqlite3 /usr/local/zend/var/db/zsd.db \"UPDATE ZSD_DIRECTIVES SET DISK_VALUE='http://${server.port.10081}/ZendServer' WHERE NAME='zray.zendserver_ui_url'\" && sudo sed -i 's#zray.zendserver_ui_url=.*#zray.zendserver_ui_url=http://${server.port.10081}/ZendServer#g' /usr/local/zend/etc/conf.d/zray.ini && sudo /usr/local/zend/bin/zendctl.sh restart",
+          "attributes": {
+            "previewUrl": "${server.80/tcp}",
+            "goal": "Run"
+          }
+        },
+        {
+          "name": "stop zend server",
+          "type": "custom",
+          "commandLine": "sudo /usr/local/zend/bin/zendctl.sh stop",
+          "attributes": {
+            "previewUrl": "",
+            "goal": "Run"
+          }
+        },
+        {
+          "name": "show admin password",
+          "type": "custom",
+          "commandLine": "echo \"Zend Server admin password is `sudo cat /root/zend-password`\"",
+          "attributes": {
+            "previewUrl": "${server.10081/tcp}",
+            "goal": ""
+          }
+        }
+      ]
+    },
+    "stackIcon": {
+      "name": "type-zend.svg",
+      "mediaType": "image/svg+xml"
+    }
+  }
