@@ -1,0 +1,74 @@
+[
+{
+    "id": "tomee-default",
+    "creator": "tomitribe",
+    "name": "TomEE",
+    "description": "Default Java Stack with JDK 8, Maven and Apache TomEE 1.7.3.",
+    "scope": "advanced",
+    "tags": [
+      "TomEE"
+    ],
+    "components": [
+      {
+        "name": "Ubuntu",
+        "version": "16.04"
+      },
+      {
+        "name": "Maven",
+        "version": "3.3.9"
+      },
+      {
+        "name": "TomEE",
+        "version": "1.7.3"
+      }
+    ],
+    "workspaceConfig": {
+      "environments": {
+        "default": {
+          "machines": {
+            "dev-machine": {
+              "installers": [
+                "org.eclipse.che.exec", "org.eclipse.che.terminal", "org.eclipse.che.ws-agent"
+              ],
+              "servers": {
+                "tomcat8" : {
+                  "port" : "8080",
+                  "protocol" : "http"
+                },
+                "tomcat8-debug" : {
+                  "port" : "8000",
+                  "protocol" : "http"
+                },
+                "codeserver" : {
+                  "port" : "9876",
+                  "protocol" : "http"
+                }
+              },
+              "attributes" : {
+                "memoryLimitBytes": "2147483648"
+              }
+            }
+          },
+          "recipe": {
+            "content": "tomitribe/ubuntu_tomee_173_jdk8",
+            "type": "dockerimage"
+          }
+        }
+      },
+      "name": "default",
+      "defaultEnv": "default",
+      "description": null,
+      "commands": [
+        {
+          "commandLine": "mvn clean install -f ${current.project.path}",
+          "name": "build",
+          "type": "mvn"
+        }
+      ]
+    },
+    "stackIcon": {
+      "name": "type-java.svg",
+      "mediaType": "image/svg+xml"
+    }
+  }
+]
