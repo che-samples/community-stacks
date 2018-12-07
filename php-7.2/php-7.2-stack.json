@@ -1,0 +1,138 @@
+{
+  "description": "Default PHP Stack with PHP 7.2, most popular extensions.",
+  "scope": "general",
+  "tags": [
+    "PHP",
+    "mysql",
+    "sqlite",
+    "Apache"
+  ],
+  "workspaceConfig": {
+    "environments": {
+      "default": {
+        "recipe": {
+          "type": "dockerimage",
+          "content": "matthieu88160/eclipse-che-php7.2"
+        },
+        "machines": {
+          "dev-machine": {
+            "env": {},
+            "servers": {
+              "80/tcp": {
+                "attributes": {},
+                "protocol": "http",
+                "port": "80"
+              },
+              "8080/tcp": {
+                "attributes": {},
+                "protocol": "http",
+                "port": "8080"
+              },
+              "8000/tcp": {
+                "attributes": {},
+                "protocol": "http",
+                "port": "8000"
+              }
+            },
+            "volumes": {},
+            "installers": [
+              "org.eclipse.che.exec",
+              "org.eclipse.che.terminal",
+              "org.eclipse.che.ws-agent",
+              "org.eclipse.che.ls.php",
+              "org.eclipse.che.ls.json"
+            ],
+            "attributes": {
+              "memoryLimitBytes": "2147483648"
+            }
+          }
+        }
+      }
+    },
+    "projects": [],
+    "commands": [
+      {
+        "commandLine": "[ -z ${editor.current.file.path} ] && echo \"Open a PHP file in the editor before executing this command.\" || php ${editor.current.file.path}",
+        "name": "run php script",
+        "type": "custom",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": ""
+        }
+      },
+      {
+        "commandLine": "[ -z ${editor.current.file.path} ] && echo \"Open a PHP file in the editor before executing this command.\" || QUERY_STRING=\"start_debug=1&debug_host=localhost&debug_port=10137\" php ${editor.current.file.path}",
+        "name": "debug php script",
+        "type": "custom",
+        "attributes": {
+          "goal": "Debug",
+          "previewUrl": ""
+        }
+      },
+      {
+        "commandLine": "service apache2 start && tail -f /var/log/apache2/access.log -f /var/log/apache2/error.log",
+        "name": "start apache",
+        "type": "custom",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": "${server.80/tcp}/${current.project.relpath}"
+        }
+      },
+      {
+        "commandLine": "service apache2 stop",
+        "name": "stop apache",
+        "type": "custom",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": ""
+        }
+      },
+      {
+        "commandLine": "service apache2 restart",
+        "name": "restart apache",
+        "type": "custom",
+        "attributes": {
+          "goal": "Run",
+          "previewUrl": "${server.80/tcp}/${current.project.relpath}"
+        }
+      }
+    ],
+    "defaultEnv": "default",
+    "name": "default",
+    "attributes": {},
+    "links": []
+  },
+  "components": [
+    {
+      "version": "16.04",
+      "name": "Ubuntu"
+    },
+    {
+      "version": "7.2.13",
+      "name": "PHP"
+    },
+    {
+      "version": "1.6.5",
+      "name": "Composer"
+    },
+    {
+      "version": "5.7.22",
+      "name": "MySQL"
+    },
+    {
+      "version": "9.0.1",
+      "name": "Zend Debugger"
+    },
+    {
+      "version": "2.4.18",
+      "name": "Apache"
+    }
+  ],
+  "creator": "contributor",
+  "name": "PHP-7.2",
+  "id": "php7.2-default",
+  "stackIcon": {
+    "name": "type-php.svg",
+    "mediaType": "image/svg+xml"
+  }
+}
